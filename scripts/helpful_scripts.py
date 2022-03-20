@@ -27,7 +27,11 @@ contract_to_mock = {
 
 DECIMALS = 8
 INITIAL_VALUE = 200000000000
+BREED_MAPPING = {0: "PUG", 1: "SHIBA_INU", 2: "ST_BERNARD"}
 
+
+def get_breed(breed_number):
+  return BREED_MAPPING[breed_number]
 
 def get_account(index=None, id=None):
     # accounts[0]

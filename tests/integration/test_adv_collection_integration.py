@@ -16,13 +16,7 @@ def test_can_create_advanced_collectible_integration():
     # Act
     advanced_collectible, tx = deploy_and_create()
     print("Waiting...")
-    time.sleep(60)
-    # requestId = creation_tx.events["requestedCollectible"]["requestId"]
-    # print(f"[requestId] {requestId} [address] {advanced_collectible.address}")
-    # random_number = 777
-    # tx = get_contract("vrf_coordinator").callBackWithRandomness(
-    #     requestId, random_number, advanced_collectible.address, {"from": get_account()}
-    # )
+    time.sleep(150)
     print(f"TokenCounter: {advanced_collectible.tokenCounter()}")
     # Assert
     assert advanced_collectible.tokenCounter() > 0
