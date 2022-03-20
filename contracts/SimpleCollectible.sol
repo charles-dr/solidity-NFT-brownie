@@ -4,8 +4,18 @@ pragma solidity 0.6.6;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-contract SimpleCollectible is ERC721 {
-    constructor() ERC721("MyNFT", "MNFT") public {
+contract SimpleCollectible is ERC721 {  
+  uint256 public tokenCounter;
+
+    constructor() ERC721("DogieBW", "DOGBW") public {
+    }
+
+    function createCollectible(string memory tokenURI) public returns (uint256) {
+      uint256 newTokenId = tokenCounter;
+      _safeMint(msg.sender, newTokenId);
+      _setTokenURI(newTokenId, tokenURI);
+      tokenCounter = tokenCounter + 1;
+      return tokenCounter;
     }
 }
 
