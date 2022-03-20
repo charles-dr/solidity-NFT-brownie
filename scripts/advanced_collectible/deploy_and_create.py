@@ -18,6 +18,7 @@ def deploy_and_create():
         config["networks"][network.show_active()]["keyhash"],
         config["networks"][network.show_active()]["fee"],
         {"from": account},
+        publish_source=config["networks"][network.show_active()].get("verify", False),
     )
 
     print(f"AdvancedCollectible has been deployed at {advanced_collectible.address}")
