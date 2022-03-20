@@ -7,7 +7,7 @@ import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
 
 contract AdvancedCollectible is ERC721, VRFConsumerBase {
 
-  uint256 tokenCounter;
+  uint256 public tokenCounter;
   bytes32 public keyhash;
   uint256 public fee;
   enum Breed {PUG, SHIBA_INU, SET_BERNARD}
