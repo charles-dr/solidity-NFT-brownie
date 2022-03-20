@@ -1,0 +1,6 @@
+{
+  "solidity.compileUsingRemoteVersion": "v0.6.6+commit.6c089d02",
+  "solidity.remappings": [
+    "@openzeppelin/=C:/Users/Tai/.brownie/packages/OpenZeppelin/openzeppelin-contracts@3.4.0",
+  ]
+}
