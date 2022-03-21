@@ -13,9 +13,11 @@ contract AdvancedCollectible is ERC721, VRFConsumerBase {
   enum Breed {PUG, SHIBA_INU, SET_BERNARD}
   mapping(uint256 => Breed) public tokenIdToBreed;
   mapping(bytes32 => address) public requestIdToSender;
+  mapping(bytes32 => uint256) public requestIdToTokenId;
 
   event requestedCollectible(bytes32 requestId, address requester);
   event breedAssigned(uint256 indexed tokenId, Breed breed);
+  event ReturnedCollectible(bytes32 indexed requestId, uint256 randomNumber);
 
   constructor(address _vrfCoordinator, address _linkToken, bytes32 _keyhash, uint256 _fee) public
   VRFConsumerBase(_vrfCoordinator, _linkToken)
@@ -39,7 +41,11 @@ contract AdvancedCollectible is ERC721, VRFConsumerBase {
     address owner = requestIdToSender[requestId];
     _safeMint(owner, newTokenId);
     // _setTokenURI(newTokenId, tokenURI);
+
+    tokenIdToBreed[newTokenId] = breed;
+    requestIdToTokenId[requestId] = newTokenId;
     tokenCounter = tokenCounter + 1;
+    emit ReturnedCollectible(requestId, randomNumber);
   }
 
   function setTokenURI(uint256 tokenId, string memory _tokenURI) public {

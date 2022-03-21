@@ -4,6 +4,18 @@ from metadata.sample_metadata import metadata_template
 from pathlib import Path
 import requests
 import json
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+breed_to_image_uri = {
+    "PUG": "ipfs://QmSsYRx3LpDAb1GZQm7zZ1AuHZjfbPkD6J7s9r41xu1mf8?filename=pug.png",
+    "SHIBA_INU": "ipfs://QmYx6GsYAKnNzZ9A6NvEKV9nf1VaDzJrqDR23Y8YSkebLU?filename=shiba-inu.png",
+    "ST_BERNARD": "ipfs://QmUPjADFGEKmfohdTaNcWhp7VGk26h5jXDA7v3VtTnTLcW?filename=st-bernard.png",
+}
+
+
 
 def main():
   advanced_collectible = AdvancedCollectible[-1]
@@ -20,12 +32,18 @@ def main():
       collectible_metadata['name'] = breed
       collectible_metadata['description'] = f"An adorable {breed} pup(by BW)!"
       image_path = "./img/" + breed.lower().replace("_", "-") + ".png"
-      image_uri = upload_to_ipfs(image_path)
+
+      image_uri = None
+      if os.getenv("UPLOAD_IPFS") == 'true':
+        image_uri = upload_to_ipfs(image_path)
+      image_uri = image_uri if image_uri else breed_to_image_uri[breed]
       collectible_metadata['image'] = image_uri
 
       with open(metadata_file_name, 'w') as file:
         json.dump(collectible_metadata, file)
-      upload_to_ipfs(metadata_file_name)
+
+      if os.getenv('UPLOAD_IPFS') == 'true':
+        upload_to_ipfs(metadata_file_name)
 
 
 
